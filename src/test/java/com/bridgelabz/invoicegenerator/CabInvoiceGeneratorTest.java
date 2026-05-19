@@ -43,5 +43,15 @@ public class CabInvoiceGeneratorTest {
         InvoiceSummary summary = invoiceGenerator.getInvoiceSummary(userId);
         InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30.0);
         assertEquals(expectedInvoiceSummary, summary);
+    @Test
+    public void givenPremiumAndNormalRides_ShouldReturnInvoiceSummary() {
+        CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
+        String userId = "premium_user";
+        Ride[] rides = { new Ride(2.0, 5, RideCategory.PREMIUM),
+                         new Ride(0.1, 1, RideCategory.NORMAL) };
+        invoiceGenerator.addRides(userId, rides);
+        InvoiceSummary summary = invoiceGenerator.getInvoiceSummary(userId);
+        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 45.0);
+        assertEquals(expectedInvoiceSummary, summary);
     }
 }
